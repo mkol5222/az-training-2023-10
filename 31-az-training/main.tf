@@ -23,6 +23,26 @@ module "standalone-chkp" {
 
 }
 
+output "cp_ip" {
+  value = module.standalone-chkp.cp_public_ip
+}
+
+output "cp_pass" {
+  value = module.standalone-chkp.cp_pass
+  sensitive = true
+}
+
+
+output "cp_sshconfig" {
+  value = <<-EOT
+  Host cp
+    HostName ${module.standalone-chkp.cp_public_ip}
+    User admin
+    PubkeyAuthentication no
+  EOT
+  sensitive = true
+}
+
 module "ubuntu1" {
   depends_on = [
     module.env.linux-subnet-id

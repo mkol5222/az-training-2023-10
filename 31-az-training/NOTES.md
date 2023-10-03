@@ -66,23 +66,22 @@ ssh ubuntu1
 This is how to access CHKP VM:
 
 ```bash
+# add SSH config for "cp"
+terraform output -raw cp_sshconfig >> ~/.ssh/config
+# password reminder 
+terraform output -raw cp_pass; echo
+# CP IP
+terraform output -raw cp_ip; echo
+# login
+ssh cp
 
 ```
 
-# fix permissions for CP serial console
+### fix permissions for CP serial console
 
 
 ```bash
 
 # remember to remove resources
 terraform destroy
-```
-Consider ~/.ssh/config for CP
-```bash
-cat << EOF >> ~/.ssh/config
-Host labcp
-   HostName 20.109.190.222
-   User admin
-   PubkeyAuthentication no
-EOF
 ```
