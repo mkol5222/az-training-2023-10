@@ -27,11 +27,8 @@ Modify and run script below:
 
 ```bash
 # configure template
-cat << EOF > terraform.tfvars
-rg = "ODL-ccvsa-1113692-02"
-admin_password = "Vpn123456#Ok"
-route_through_firewall = false
-EOF
+
+
 
 # review
 cat terraform.tfvars
@@ -79,9 +76,14 @@ ssh cp
 
 ### fix permissions for CP serial console
 
+### policy
+```bash
+cd /workspaces/az-training-2023-10/32-policy
+code NOTES.md
+```
 
 ```bash
 
-# remember to remove resources
+# remember to remove resources (once we are really done)
 terraform destroy
 ```

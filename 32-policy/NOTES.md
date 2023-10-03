@@ -4,18 +4,22 @@
 # this is how to access it
 
 # add SSH config for "cp"
-terraform output -raw cp_sshconfig >> ~/.ssh/config
+# terraform output -raw cp_sshconfig >> ~/.ssh/config
+
+# check folder!!!
+pushd /workspaces/az-training-2023-10/31-az-training
 # password reminder 
 terraform output -raw cp_pass; echo
 # CP IP
 terraform output -raw cp_ip; echo
 # login
+popd
 ssh cp
 
 
 # enable API access
 
-# make sure API is ready - CP mgmt is up
+# RUN ON CP: make sure API is ready - CP mgmt is up
 while true; do
     status=`api status |grep 'API readiness test SUCCESSFUL. The server is up and ready to receive connections' |wc -l`
     echo "Checking if the API is ready"
@@ -26,19 +30,23 @@ while true; do
     done
 echo "API ready " `date`
 
+# RUN ON CP: expose API server
 sleep 5
 echo "Set R80 API to accept all ip addresses"
 mgmt_cli -r true set api-settings accepted-api-calls-from "All IP addresses" --domain 'System Data'
 echo "Restarting API Server"
 api restart
 
-# add api_user
+# RUN ON CP: add api_user
 mgmt_cli -r true add administrator name "api_user" password "Vpn123Vpn123#nok" must-change-password false \
     authentication-method "check point password" permissions-profile "read write all"  --domain 'System Data' --format json
 mgmt_cli -r true install-database targets.1 chkp-standalone
 ```
+### Logout from CP
 
 ```bash
+# check folder!
+pushd /workspaces/az-training-2023-10/32-policy
 # get CP server IP
 CPIP=$(pushd /workspaces/az-training-2023-10/31-az-training>/dev/null; terraform output -raw cp_ip; popd>/dev/null)
 pushd /workspaces/az-training-2023-10/32-policy
@@ -47,6 +55,9 @@ pushd /workspaces/az-training-2023-10/32-policy
 cat << EOF > /workspaces/az-training-2023-10/32-policy/terraform.tfvars
 cp_server = "$CPIP"
 EOF
+
+# check
+cat terraform.tfvars
 ```
 
 ```bash
