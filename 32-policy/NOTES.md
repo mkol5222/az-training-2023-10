@@ -69,4 +69,18 @@ popd
 
 # and now connect from Linux to Internet
 ssh ubuntu1 'while true; do ping -c1 1.1.1.1; curl -s ip.iol.cz/ip/ -m1 ; echo; sleep 2; done'
+
+# and now remove CP route
+pushd /workspaces/az-training-2023-10/31-az-training
+terraform apply -auto-approve -var route_through_firewall=false
+popd
+
+# cleanup
+pushd /workspaces/az-training-2023-10/32-policy
+terraform destroy
+# publish in SmartConsole
+
+# Azure cleanup
+pushd /workspaces/az-training-2023-10/31-az-training
+terraform destroy
 ```
