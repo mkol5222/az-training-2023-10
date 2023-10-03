@@ -27,7 +27,11 @@ Modify and run script below:
 
 ```bash
 # configure template
-
+cat << EOF > terraform.tfvars
+rg = "ODL-ccvsa-1113692-02"
+admin_password = "Vpn123456#Ok"
+route_through_firewall = false
+EOF
 
 
 # review
