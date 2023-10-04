@@ -57,7 +57,6 @@ This is how to access Linux VM:
 # Linux SSH access
 mkdir -p ~/.ssh
 terraform output -raw ssh_config > ~/.ssh/config
-terraform output -raw ssh_config > ~/.ssh/config
 terraform output -raw ssh_key > ~/.ssh/ubuntu1.key
 chmod 400 ~/.ssh/ubuntu1.key
 # enjoy access
